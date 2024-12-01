@@ -15,6 +15,10 @@ module.exports = {
                 const isInCatchBlock = context.getAncestors().some(ancestor => ancestor.type === 'CatchClause');
 
                 if (isResponseHandlerCall && isInCatchBlock) {
+                    const hasErrorsArray = node.arguments?.some(arg => {
+                        return arg.type === 'ObjectExpression' && arg.properties?.some(prop => prop.key.name === 'errors' && prop.value !== null && prop.value.type === 'ArrayExpression');
+                    });
+
                     const hasSourceParam = node.arguments?.some(arg => {
                         return arg.type === 'ObjectExpression' && arg.properties?.some(prop => {
                             return prop.key.name === 'errors' && prop.value.elements?.some(element => {
@@ -23,7 +27,7 @@ module.exports = {
                         });
                     });
 
-                    if (!hasSourceParam) {
+                    if (hasErrorsArray && !hasSourceParam) {
                         context.report({
                             node,
                             message: "responseHandler call in catch block must have a 'source' parameter.",

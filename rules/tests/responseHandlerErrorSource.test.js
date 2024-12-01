@@ -23,28 +23,35 @@ ruleTester.run("response-handler-error-source", responseHandlerErrorSource, {
         }
       }`,
     },
+    {
+        code: `function test(res) {
+            try {
+              foo();
+            } catch (error) {
+              return responseHandler({
+                res: res,
+                status: 500,
+                data: null,
+                errors: null
+              });
+            }
+          }`
+      },
+      {
+        code: `function test(res) {
+            try {
+              foo();
+            } catch (error) {
+              return responseHandler({
+                res: res,
+                status: 500,
+                data: null
+              });
+            }
+          }`
+      }
   ],
   invalid: [
-    {
-      code: `function test(res) {
-          try {
-            foo();
-          } catch (error) {
-            return responseHandler({
-              res: res,
-              status: 500,
-              data: null,
-              errors: null
-            });
-          }
-        }`,
-      errors: [
-        {
-          message:
-            "responseHandler call in catch block must have a 'source' parameter.",
-        },
-      ],
-    },
     {
       code: `function test(res) {
         try { 
