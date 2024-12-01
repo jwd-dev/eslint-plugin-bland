@@ -49,6 +49,40 @@ ruleTester.run("response-handler-error-source", responseHandlerErrorSource, {
               });
             }
           }`
+      },
+      {
+        code: `function test(res) {
+            try {
+              foo();
+            } catch (error) {
+              return responseHandler({
+                res: res,
+                status: 500,
+                data: null,
+                errors: [
+					{
+						error: "STRIPE_WH_ERROR",
+						message: 'Error validating Stripe webhook payload',
+						source: err,
+					},
+				]
+              });
+            }
+          }`
+      },
+      {
+        code: `function test(res) {
+            try {
+              foo();
+            } catch (error) {
+		return responseHandler({
+			res: res,
+			status: 200,
+			data: { phone_numbers: [] },
+			errors: null,
+		});
+	}
+      }`
       }
   ],
   invalid: [
