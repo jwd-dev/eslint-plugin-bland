@@ -4,6 +4,6 @@
   "private": true,
   "main": "index.js",
   "peerDependencies": {
-    "eslint": "^8.57.1"
+    "eslint": "^9.16.0"
   }
 }

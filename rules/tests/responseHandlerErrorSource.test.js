@@ -1,13 +1,54 @@
-const { RuleTester } = require('eslint');
-const responseHandlerErrorSource = require('../responseHandlerErrorSource');
+const { RuleTester } = require("eslint");
+const responseHandlerErrorSource = require("../responseHandlerErrorSource");
 const ruleTester = new RuleTester();
-ruleTester.run('response-handler-error-source', responseHandlerErrorSource, {
-    valid: [{
-        code: 'try { foo() } catch (e) { bar() }',
-    }],
-    invalid: [{
-        code: 'try { foo() } catch (e) {}',
-        // we can use messageId from the rule object
-        errors: [{ messageId: 'response-handler-error-source' }],
-    }]
+ruleTester.run("response-handler-error-source", responseHandlerErrorSource, {
+  valid: [
+    {
+      code: `function test(res) {
+        try {
+          foo();
+        } catch (error) {
+          return responseHandler({
+            res,
+            status: 500,
+            data: null,
+            errors: [
+              {
+                error: "RUN_ERROR",
+                message: "An error occurred while running the request",
+                source: error,
+              },
+            ],
+          });
+        }
+      }`,
+    },
+  ],
+  invalid: [
+    {
+      code: `function test(res) {
+        try { 
+          foo(); 
+        } catch (error) {
+          return responseHandler({
+            res,
+            status: 500,
+            data: null,
+            errors: [
+              {
+                error: "RUN_ERROR",
+                message: "An error occurred while running the request"
+              },
+            ],
+          });
+        }
+      }`,
+      errors: [
+        {
+          message:
+            "responseHandler call in catch block must have a 'source' parameter.",
+        },
+      ],
+    },
+  ],
 });
