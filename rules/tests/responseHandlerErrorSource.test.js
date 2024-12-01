@@ -9,20 +9,20 @@ ruleTester.run("response-handler-error-source", responseHandlerErrorSource, {
           foo();
         } catch (error) {
           return responseHandler({
-            res,
+            res: res,
             status: 500,
             data: null,
             errors: [
               {
                 error: "RUN_ERROR",
                 message: "An error occurred while running the request",
-                source: error,
-              },
-            ],
+                source: error
+              }
+            ]
           });
         }
-      }`,
-    },
+      }`
+    }
   ],
   invalid: [
     {
@@ -31,24 +31,25 @@ ruleTester.run("response-handler-error-source", responseHandlerErrorSource, {
           foo(); 
         } catch (error) {
           return responseHandler({
-            res,
+            res: res,
             status: 500,
             data: null,
             errors: [
               {
                 error: "RUN_ERROR",
                 message: "An error occurred while running the request"
-              },
-            ],
+              }
+            ]
           });
         }
-      }`,
+      }`
+      ,
       errors: [
         {
           message:
-            "responseHandler call in catch block must have a 'source' parameter.",
-        },
-      ],
-    },
-  ],
+            "responseHandler call in catch block must have a 'source' parameter."
+        }
+      ]
+    }
+  ]
 });

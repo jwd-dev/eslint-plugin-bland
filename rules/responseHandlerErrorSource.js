@@ -9,11 +9,10 @@ module.exports = {
         schema: [], // no options
     },
     create: function (context) {
-        const sourceCode = context.getSourceCode();
         return {
             CallExpression(node) {
                 const isResponseHandlerCall = node.callee.name === 'responseHandler';
-                const isInCatchBlock = sourceCode.getAncestors(node).some(ancestor => ancestor.type === 'CatchClause');
+                const isInCatchBlock = context.getAncestors().some(ancestor => ancestor.type === 'CatchClause');
 
                 if (isResponseHandlerCall && isInCatchBlock) {
                     const hasSourceParam = node.arguments.some(arg => {
