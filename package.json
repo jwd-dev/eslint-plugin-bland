@@ -1,9 +1,9 @@
 {
-    "name": "eslint-plugin-bland",
-    "version": "1.0.0",
-    "private": true,
-    "main": "index.js",
-    "peerDependencies": {
-        "eslint": "latest"
-    }
+  "name": "eslint-plugin-bland",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "peerDependencies": {
+    "eslint": "^8.57.1"
+  }
 }
