@@ -15,10 +15,10 @@ module.exports = {
                 const isInCatchBlock = context.getAncestors().some(ancestor => ancestor.type === 'CatchClause');
 
                 if (isResponseHandlerCall && isInCatchBlock) {
-                    const hasSourceParam = node.arguments.some(arg => {
-                        return arg.type === 'ObjectExpression' && arg.properties.some(prop => {
-                            return prop.key.name === 'errors' && prop.value.elements.some(element => {
-                                return element.type === 'ObjectExpression' && element.properties.some(innerProp => innerProp.key.name === 'source');
+                    const hasSourceParam = node.arguments?.some(arg => {
+                        return arg.type === 'ObjectExpression' && arg.properties?.some(prop => {
+                            return prop.key.name === 'errors' && prop.value.elements?.some(element => {
+                                return element.type === 'ObjectExpression' && element.properties?.some(innerProp => innerProp.key.name === 'source');
                             });
                         });
                     });
