@@ -28,7 +28,7 @@ module.exports = {
                                     catchClause.body.body[0].type === 'ReturnStatement' &&
                                     catchClause.body.body[0].argument.callee.name === 'responseHandler';
 
-                                const responseHandlerArgs = catchClause.body.body[0].argument.arguments[0];
+                                const responseHandlerArgs = catchClause.body.body[0].argument?.arguments?.[0];
                                 const isGenericError = responseHandlerArgs &&
                                     responseHandlerArgs.properties.some(prop => 
                                         prop.key.name === 'status' && prop.value.value === 500)
