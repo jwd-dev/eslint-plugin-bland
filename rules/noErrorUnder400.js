@@ -29,7 +29,7 @@ module.exports = {
               statusProperty &&
               statusProperty.value.value < 400 &&
               errorsProperty &&
-              errorsProperty.value !== null
+              errorsProperty.value.value !== null
             ) {
               context.report({
                 node,

@@ -34,7 +34,8 @@ ruleTester.run("no-generic-try-catch", noErrorUnder400, {
 				  data: {
 					  message: "This is a fake endpoint",
 				  },
-			  }		});
+			  },
+			  errors: null,		});
   });`,
 	  },
 	  {
