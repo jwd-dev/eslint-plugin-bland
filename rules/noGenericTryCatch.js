@@ -17,11 +17,12 @@ module.exports = {
                 if (isInstancePostOrGet) {
                     const functionExpression = node.arguments.find(arg => arg.type === 'ArrowFunctionExpression');
                     if (functionExpression) {
-                        const isWrappedInTryCatch = functionExpression.body.body.some(statement => statement.type === 'TryStatement');
+                        const firstStatement = functionExpression.body.body[0];
+                        const isWrappedInTryCatch = firstStatement && firstStatement.type === 'TryStatement';
                         
                         if (isWrappedInTryCatch) {
-                            const tryStatement = functionExpression.body.body.find(statement => statement.type === 'TryStatement');
-                            const catchClause = tryStatement && tryStatement.handler;
+                            const tryStatement = firstStatement;
+                            const catchClause = tryStatement.handler;
                             
                             if (catchClause) {
                                 const onlyResponseHandler = catchClause.body.body.length === 1 &&
