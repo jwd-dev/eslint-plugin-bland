@@ -25,12 +25,12 @@ module.exports = {
                             
                             if (catchClause) {
                                 const onlyResponseHandler = catchClause.body.body.length === 1 &&
-                                    catchClause.body.body[0].type === 'ReturnStatement' &&
-                                    catchClause.body.body[0].argument.callee.name === 'responseHandler';
+                                    catchClause.body.body[0]?.type === 'ReturnStatement' &&
+                                    catchClause.body.body[0]?.argument?.callee?.name === 'responseHandler';
 
                                 const responseHandlerArgs = catchClause.body.body[0].argument?.arguments?.[0];
                                 const isGenericError = responseHandlerArgs &&
-                                    responseHandlerArgs.properties.some(prop => 
+                                    responseHandlerArgs.properties?.some(prop => 
                                         prop.key.name === 'status' && prop.value.value === 500)
 
                                 if (onlyResponseHandler && isGenericError) {
