@@ -60,6 +60,21 @@ ruleTester.run("no-generic-try-catch", noGenericTryCatch, {
             "Avoid wrapping the entire function in a try-catch that only returns a generic error response.",
         },
       ],
+	  output: `instance.post("/fake", async (req, res) => {
+	
+		return responseHandler({
+			res: res,
+			status: 200,
+			data: {
+				status: "success",
+				data: {
+					message: "This is a fake endpoint",
+				},
+			},
+			errors: null,
+		});
+	
+});`
     },
   ],
 });

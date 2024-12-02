@@ -1,11 +1,11 @@
 module.exports = {
     meta: {
         type: "problem",
+        fixable: "code",
         docs: {
             description: "Ban instance.post/instance.get that wraps the entire function in a try-catch and returns a generic error",
             category: "Best Practices",
             recommended: false,
-            fixable: "code"
         },
         schema: [], // no options
     },
