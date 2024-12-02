@@ -5,6 +5,7 @@ module.exports = {
             description: "Ban instance.post/instance.get that wraps the entire function in a try-catch and returns a generic error",
             category: "Best Practices",
             recommended: false,
+            fixable: "code"
         },
         schema: [], // no options
     },
@@ -38,6 +39,12 @@ module.exports = {
                                     context.report({
                                         node,
                                         message: "Avoid wrapping the entire function in a try-catch that only returns a generic error response.",
+                                        fix: function(fixer) {
+                                            const sourceCode = context.getSourceCode();
+                                            const tryBlock = tryStatement.block;
+                                            const tryBlockText = sourceCode.getText(tryBlock);
+                                            return fixer.replaceText(tryStatement, tryBlockText.slice(1, -1));
+                                        }
                                     });
                                 }
                             }
